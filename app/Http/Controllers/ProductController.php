@@ -13,6 +13,7 @@ class ProductController extends Controller
 {
     protected $user;
 
+    //tokenからユーザー情報を取得
     public function __construct()
     {
         $this->user = JWTAuth::parseToken()->authenticate();

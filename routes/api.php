@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TestController;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ProductController;
@@ -18,11 +19,11 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::apiResource('posts', 'PostController');
+Route::get('test', [TestController::class, 'test']);
 
 //JWT
 Route::post('login', [ApiController::class, 'authenticate']);
@@ -36,6 +37,6 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('create', [ProductController::class, 'store']);
     Route::put('update/{product}',  [ProductController::class, 'update']);
     Route::delete('delete/{product}',  [ProductController::class, 'destroy']);
-
+    Route::apiResource('posts', 'PostController');
 
 });

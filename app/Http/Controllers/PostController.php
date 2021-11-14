@@ -52,6 +52,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        //Validate data
+        $data = $request->only('title', 'content');
+        $validator = Validator::make($data, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 200);
+        }
+
+
         $post = $this->user->posts()->create([
             'title' => $request->title,
             'content' => $request->content,

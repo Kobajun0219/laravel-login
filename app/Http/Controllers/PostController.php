@@ -4,9 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\User;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+
+    protected $user;
+
+    //tokenからユーザー情報を取得
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+        // $this->user = JWTAuth::getToken();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +30,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        // 投稿を作成日時の新しい順でペジネーションした結果を返す
-        return Post::all();
+        // 自分の投稿だけ出したい
+        return $this->user->posts()->get();
     }
 
     // /**
@@ -36,8 +52,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // リクエストパラメータから取得した値をもとにPostを作成する
-        return Post::create($request->all());
+        $post = $this->user->posts()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        //Product created, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => $post
+        ], Response::HTTP_OK);
     }
 
     /**

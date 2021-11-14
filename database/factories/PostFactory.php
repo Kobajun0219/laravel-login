@@ -18,6 +18,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => $this->faker->randomNumber(1),
             'title' => $this->faker->realText(rand(10,15)),
             'content' => $this->faker->realText(rand(20, 50)),
             'created_at' => now(),

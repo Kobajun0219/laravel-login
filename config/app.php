@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //JWT
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-
+        App\Providers\SerchServiceProvider::class,
     ],
 
     /*
@@ -234,6 +234,8 @@ return [
         //JWT
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        
+        'Serch' => App\Facades\Serch::class,
 
     ],
 

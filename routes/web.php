@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/laravel', function () {
     return view('welcome');
 });
+
+Route::get('/serch', 'UsersController@serch');
+
+//ユーザー一覧と検索画面
+Route::get('/allUser', 'UsersController@index');
